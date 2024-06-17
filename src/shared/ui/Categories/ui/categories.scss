@@ -39,8 +39,9 @@
 }
 
 .dropdown_menu {
-  display: inline-block;
+  display: flex;
   position: relative;
+  gap: 20px;
 }
 
 
@@ -66,18 +67,21 @@
   text-align: center;
   color: #1A1A1A;
   text-decoration: none;
+  width: 100%;
+  gap: 10px;
 }
 
 
 .dropdown_menu::after {
   content: '▼';
   position: absolute;
-  top: 50%;
+  top: 53%;
   border-radius: 50px;
-  right: 20px;
+  right: 17px;
   transform: translateY(-50%);
   pointer-events: none;
   color: #000000;
+  font-size: 17px;
 }
 
 .dropdown_option {
@@ -85,7 +89,7 @@
 }
 
 .dropdown_menu select:hover{
-  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0px 0px 30px -8px black;
 }
 
 

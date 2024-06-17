@@ -36,7 +36,7 @@ export function Cards() {
   };
 
   if (!persons.length) {
-    return <div className="loader">здесь пока нет клиентов</div>;
+    return <div className="loader">Здесь пока нет партнеров</div>;
   }
 
   if (!persons) {

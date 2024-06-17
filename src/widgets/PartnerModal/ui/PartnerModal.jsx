@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import "./partnerModal.scss";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { useDispatch, useSelector } from "react-redux";
+import { getNetworks } from "../../../app/providers/StoreProvider/networkSlice";
 
 export function PartnerModal({ isOpen, onClose, onSubmit }) {
   const initialFormData = {
@@ -13,6 +16,12 @@ export function PartnerModal({ isOpen, onClose, onSubmit }) {
     email: "",
   };
   const [formData, setFormData] = useState(initialFormData);
+  const networks = useSelector((state) => state.networks.networks);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getNetworks());
+  }, [dispatch]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -31,6 +40,29 @@ export function PartnerModal({ isOpen, onClose, onSubmit }) {
       ...prevData,
       networks: [...prevData.networks, { name: "", followers: "" }],
     }));
+  };
+
+  const addNetworkFromDropdown = (e) => {
+    const networkId = e.target.value;
+    const selectedNetwork = networks.find(
+      (network) => network.network_id === parseInt(networkId, 10)
+    );
+    if (selectedNetwork) {
+      setFormData((prevData) => ({
+        ...prevData,
+        networks: [
+          ...prevData.networks,
+          { name: selectedNetwork.network_name, followers: "" },
+        ],
+      }));
+    }
+  };
+
+  const removeNetwork = (index) => {
+    setFormData((prevData) => {
+      const newNetworks = prevData.networks.filter((_, i) => i !== index);
+      return { ...prevData, networks: newNetworks };
+    });
   };
 
   const handleSubmit = (e) => {
@@ -76,8 +108,20 @@ export function PartnerModal({ isOpen, onClose, onSubmit }) {
             value={formData.achievements}
             onChange={handleInputChange}
           />
+          <div className="dropdown_menu">
+            <select onChange={addNetworkFromDropdown} defaultValue="">
+              <option className="dropdown_option" value="" disabled>
+                Соцсети
+              </option>
+              {networks.map((network) => (
+                <option key={network.network_id} value={network.network_id}>
+                  {network.network_name}
+                </option>
+              ))}
+            </select>
+          </div>
           {formData.networks.map((network, index) => (
-            <div key={index}>
+            <div key={index} className="network-field">
               <input
                 type="text"
                 name="name"
@@ -93,6 +137,11 @@ export function PartnerModal({ isOpen, onClose, onSubmit }) {
                 value={network.followers}
                 onChange={(e) => handleNetworkChange(index, e)}
                 required
+              />
+              <RiDeleteBin6Line
+                type="button"
+                role="button"
+                onClick={() => removeNetwork(index)}
               />
             </div>
           ))}
