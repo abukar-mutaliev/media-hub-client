@@ -1,7 +1,7 @@
 {
   "name": "client",
   "version": "0.1.0",
-  "proxy": "http://media-hub.ru/",
+  "proxy": "http://localhost:5000/",
   "private": true,
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
@@ -16,10 +16,8 @@
     "sass": "^1.77.1"
   },
   "dependencies": {
-    "@craco/craco": "^7.1.0",
     "@reduxjs/toolkit": "^2.2.5",
     "axios": "^1.6.8",
-    "http-proxy-middleware": "^3.0.0",
     "jwt-decode": "^4.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -35,9 +33,8 @@
     "slick-carousel": "^1.8.1"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test"
+    "start": "react-scripts start",
+    "build": "react-scripts build"
   },
   "lint-staged": {
     "**/*.{js,jsx}": [
